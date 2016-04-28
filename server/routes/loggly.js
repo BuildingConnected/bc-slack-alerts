@@ -11,6 +11,7 @@ router.post('/', function(req, res) {
 
   var alertMessage = req.query.alert || req.query.type || 'Some alert message';
   var type = req.query.type;
+  var channel = '#alerts_backend';
 
   switch(type) {
     case 'boxerror':
@@ -18,6 +19,7 @@ router.post('/', function(req, res) {
       break;
     case 'elevatedclientalerts':
       alertMessage = 'Elevated Client Alerts';
+      channel = '#alerts_frontend';
       break;
     case 'elevatedserveralerts':
       alertMessage = 'Elevated Server Alerts';
@@ -40,7 +42,7 @@ router.post('/', function(req, res) {
   }
 
   slackBot.send({
-    channel: '#alerts',
+    channel: channel,
     username: 'Loggly',
     icon_emoji: ':loggly:',
     attachments: [{
